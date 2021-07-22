@@ -1,28 +1,32 @@
-window.App = window.App || {}
+const App = require("./data");
+const api = require("./api");
 
-window.App.showPostsForCurrentUser = (userId, cb) => {
-  window.App.getPostsForUser(userId, posts => {
-    const postTemplates = posts.map(post => {
+const showPostsForCurrentUser = (userId, cb) => {
+  api.getPostsForUser(userId, (posts) => {
+    const postTemplates = posts.map((post) => {
       return `
       <div class="post">
         ${post.title}
         ${post.body}
         ${post.createdBy}
-      </div>`
-    })
-    cb(postTemplates)
-  })
-}
+      </div>`;
+    });
+    cb(postTemplates);
+  });
+};
 
-window.App.showUserProfile = (userId, cb) => {
-  window.App.getUserById(userId, user => {
+const showUserProfile = (userId, cb) => {
+  api.getUserById(userId, (user) => {
     const profile = `
       <div>
         ${user.name}
       </div>
-    `
-    cb(user)
-  })
-}
+    `;
+    cb(user);
+  });
+};
 
-
+module.exports = {
+  showUserProfile,
+  showPostsForCurrentUser,
+};
